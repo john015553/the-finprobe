@@ -1,0 +1,22 @@
+{
+  "name": "FinProbe Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/pnpm:2": {}
+  },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Next.js", "onAutoForward": "openBrowser" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "postCreateCommand": "bash -lc 'chmod +x .devcontainer/install-stripe-cli.sh .devcontainer/sync-env.sh || true; corepack enable; if [ -f pnpm-lock.yaml ]; then pnpm i; else npm i; fi; bash .devcontainer/install-stripe-cli.sh'",
+  "postStartCommand": "bash -lc '.devcontainer/sync-env.sh'"
+}
