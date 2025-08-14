@@ -2,21 +2,21 @@
   "name": "FinProbe Dev",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/pnpm:2": {}
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "forwardPorts": [3000],
-  "portsAttributes": {
-    "3000": { "label": "Next.js", "onAutoForward": "openBrowser" }
-  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y postgresql-client && curl -s https://packagecloud.io/install/repositories/stripe/stripe-cli/script.deb.sh | sudo bash && sudo apt-get install -y stripe && corepack enable && pnpm install",
   "customizations": {
     "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true
+      },
       "extensions": [
         "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "bradlc.vscode-tailwindcss"
+        "esbenp.prettier-vscode"
       ]
     }
   },
-  "postCreateCommand": "bash -lc 'chmod +x .devcontainer/install-stripe-cli.sh .devcontainer/sync-env.sh || true; corepack enable; if [ -f pnpm-lock.yaml ]; then pnpm i; else npm i; fi; bash .devcontainer/install-stripe-cli.sh'",
-  "postStartCommand": "bash -lc '.devcontainer/sync-env.sh'"
+  "remoteUser": "node"
 }
